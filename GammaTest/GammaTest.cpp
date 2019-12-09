@@ -2,10 +2,28 @@
 //
 
 #include <iostream>
+#include "GlfwRenderWindow.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	CGlfwRenderWindow* pRenderWindow = new CGlfwRenderWindow(800, 600);
+	MSG msg;
+	::ZeroMemory(&msg, sizeof(MSG));
+	// Main message loop:
+	while (!glfwWindowShouldClose(pRenderWindow->GetMainWindow()))
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
+		{
+			if (GetMessage(&msg, NULL, 0, 0))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+
+		pRenderWindow->Render();
+		Sleep(0);
+	}
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
